@@ -17,3 +17,9 @@ h1 {
   height: auto;
   margin-top: 40px;
 }
+
+.tiny {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 20px;
+}
