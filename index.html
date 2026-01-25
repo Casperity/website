@@ -14,9 +14,43 @@
   <body>
     <h1>get off my site pal</h1>
     <p>well heres a cookie for coming still...</p>
-	<img src="cookie.png" alt="cookie" class="cookie">
+	<div id="cookie-container">
+        <img src="cookie.png" alt="cookie" class="cookie" id="cookie">
+    </div>
 	<p id="response" class="tiny"></p>
     <script src="script.js"></script>
 	<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4eafe2a4cc954096b5e723a2277f5226"}'></script><!-- End Cloudflare Web Analytics -->
+	<script>
+ 	 const cookie = document.getElementById("cookie");
+	 const container = document.getElementById("cookie-container");
+	 
+	 const sounds = [
+        new Audio("bite1.mp3"),
+        new Audio("bite2.mp3")
+     ];
+	 
+	 sounds.forEach(sound => {
+        sound.volume = 0.2;
+     });
+
+     let bite = 0;
+     const maxBites = 5;
+
+   	 cookie.addEventListener("click", () => {
+	 
+	   const sound = sounds[bite % sounds.length];
+       sound.currentTime = 0;
+       sound.play();
+
+   	   bite++;
+
+       if (bite <= maxBites) {
+         cookie.src = `cookie${bite}.png`;
+       } else {
+         cookie.style.display = "none";
+         container.innerHTML = "<p class='cookie-text'>YOU BIG BACK >:( </p>";
+      }
+    });
+    </script>
   </body>
 </html>
