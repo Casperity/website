@@ -161,8 +161,10 @@
     console.log("dox");
     let doxElement = document.getElementById("dox");
     let doxBgVideo = document.getElementById("dox-bg-vid");
+    let doxBgAudio = document.getElementById("dox-bg-audio");
     let doxOverlay = document.getElementById("dox-overlay");
     doxBgVideo.play();
+	doxBgAudio.play();
     doxElement.style.opacity = '1';
     let fontSize = Math.min(window.innerHeight / 10, window.innerWidth / 20);
     doxOverlay.style.fontSize = fontSize + 'px';
@@ -741,8 +743,9 @@ body{
          <span onclick="start_dox()" class="appear">[<span style="--color: #FF0000" class="glow-hover"></span>]</span>
      -->
       <div id="dox">
-        <video id="dox-bg-vid" loop="" playsinline="" preload="auto" src="Comp_1_3.mp4"></video>
+        <video id="dox-bg-vid" loop="" playsinline="" preload="auto" muted src="Comp_1_3.mp4"></video>
         <div id="dox-overlay"></div>
+		<audio id="dox-bg-audio" loop playsinline preload="auto" src="song.mp3"></audio>
       </div>
     </div>
     <div id="main">
