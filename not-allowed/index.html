@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Not Allowed</title>
+
+  <style>
+    :root {
+      --bg:      #0f0f11;
+      --surface: #16161a;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+      --accent:  #c084fc;
+      --red:     #f87171;
+      --border:  #27272a;
+    }
+
+    [data-theme="light"] {
+      --bg:      #f8fafc;
+      --surface: #ffffff;
+      --text:    #0f172a;
+      --muted:   #64748b;
+      --accent:  #a855f7;
+      --red:     #ef4444;
+      --border:  #e2e8f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 480px;
+      user-select: none;
+    }
+
+    .code {
+      font-size: clamp(6rem, 22vw, 14rem);
+      font-weight: 900;
+      line-height: 0.85;
+      letter-spacing: -0.06em;
+      background: linear-gradient(90deg, var(--accent), #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      transition: all 0.22s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #b47eed;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px -10px #a855f740;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: var(--surface);
+      border-color: var(--muted);
+    }
+
+    .lock-icon {
+      font-size: 6rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.15;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .code {
+        animation: glow 4s ease-in-out infinite alternate;
+      }
+    }
+
+    @keyframes glow {
+      from { filter: brightness(0.9); }
+      to   { filter: brightness(1.35); }
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 999px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" aria-label="Toggle dark/light mode">☀︎</button>
+
+  <div class="container">
+    <div class="lock-icon">🔒</div>
+
+    <div class="code">403</div>
+
+    <h1>Access Not Allowed</h1>
+
+    <p>
+      This area is only for authorized people.<br>
+      You don't have permission to view this resource.
+    </p>
+
+    <div class="btn-group">
+      <a href="/" class="btn btn-primary">← Back to Home</a>
+      <a href="javascript:history.back()" class="btn btn-outline">Go Back</a>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.querySelector('.theme-toggle');
+    const html = document.documentElement;
+
+    if (!localStorage.getItem('theme')) {
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        html.setAttribute('data-theme', 'dark');
+      } else {
+        html.setAttribute('data-theme', 'light');
+      }
+    } else {
+      html.setAttribute('data-theme', localStorage.getItem('theme'));
+    }
+
+    toggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
+</body>
+</html>
