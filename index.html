@@ -1,62 +1,44 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
   <head>
+	<meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-	<link rel="preload" as="image" href="cookie.png">
+	<!--<link rel="preload" as="image" href="cookie.png">
 	<link rel="preload" as="image" href="cookie1.png">
 	<link rel="preload" as="image" href="cookie2.png">
 	<link rel="preload" as="image" href="cookie3.png">
 	<link rel="preload" as="image" href="cookie4.png">
-	<link rel="preload" as="image" href="cookie5.png">
+	<link rel="preload" as="image" href="cookie5.png">-->
 
-    <title>chud website</title>
+    <title>casper runs u</title>
     <meta property="og:title" content="honhon stinks" />
     <meta property="og:description" content="honhon is a BUM" />
 
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>get off my site pal</h1>
-    <p>well heres a cookie for coming still...</p>
-	<div id="cookie-container">
-        <img src="cookie.png" alt="cookie" class="cookie" id="cookie">
+    <video id="bg-video" loop playsinline>
+        <source src="over.mp4" type="video/mp4">
+    </video>
+	  
+    <div class="overlay" id="overlay">
+        <div class="click-text">click</div>
     </div>
-	<p id="response" class="tiny"></p>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const video = document.getElementById('bg-video');
+
+        document.addEventListener('click', () => {
+          overlay.classList.add('hidden');
+          video.play().catch(() => {});
+        }, { once: true });
+    </script>
+	  
     <script src="script.js"></script>
 	<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4eafe2a4cc954096b5e723a2277f5226"}'></script><!-- End Cloudflare Web Analytics -->
-	<script>
- 	 const cookie = document.getElementById("cookie");
-	 const container = document.getElementById("cookie-container");
-	 
-	 const sounds = [
-        new Audio("bite1.mp3"),
-        new Audio("bite2.mp3")
-     ];
-	 
-	 sounds.forEach(sound => {
-        sound.volume = 0.2;
-     });
-
-     let bite = 0;
-     const maxBites = 5;
-
-   	 cookie.addEventListener("click", () => {
-	 
-	   const sound = sounds[bite % sounds.length];
-       sound.currentTime = 0;
-       sound.play();
-
-   	   bite++;
-
-       if (bite <= maxBites) {
-         cookie.src = `cookie${bite}.png`;
-       } else {
-         cookie.style.display = "none";
-         container.innerHTML = "<p class='cookie-text'>YOU BIG BACK >:( </p>";
-      }
-    });
-    </script>
   </body>
 </html>
