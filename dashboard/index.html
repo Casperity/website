@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Dashboard</title>
   <style>
-    /* Optional: fallback loader style */
+    /* Fallback loader style */
     #app {
       min-height: 100vh;
       display: flex;
@@ -37,18 +37,15 @@
 
       // Inject <head> CSS (style and link)
       doc.head.querySelectorAll('style, link[rel="stylesheet"]').forEach(el => {
-        // Avoid duplicates
         if (![...document.head.children].some(h => h.outerHTML === el.outerHTML)) {
           document.head.appendChild(el.cloneNode(true));
         }
       });
 
-      // Wrap body content in a div to preserve layout and prevent collapsing
+      // Wrap body content in a div that preserves layout
       const wrapper = document.createElement('div');
       wrapper.style.width = '100%';
-      wrapper.style.height = '100%';
       wrapper.style.minHeight = '100vh';
-      wrapper.style.display = 'contents'; // preserves original body layout
       wrapper.innerHTML = doc.body.innerHTML;
 
       // Clear app and append wrapper
