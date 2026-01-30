@@ -31,19 +31,11 @@
         }
       });
 
-      // Create wrapper for body content
+      // Wrap body content in a div
       const wrapper = document.createElement('div');
-      wrapper.innerHTML = doc.body.innerHTML;
-
-      // Apply all computed styles from the Worker <body> to the wrapper
-      const bodyStyles = getComputedStyle(doc.body);
-      for (let i = 0; i < bodyStyles.length; i++) {
-        const prop = bodyStyles[i];
-        wrapper.style.setProperty(prop, bodyStyles.getPropertyValue(prop));
-      }
-
-      // Ensure min height to avoid collapse
+      wrapper.style.width = '100%';
       wrapper.style.minHeight = '100vh';
+      wrapper.innerHTML = doc.body.innerHTML;
 
       // Clear app and append wrapper
       app.innerHTML = '';
