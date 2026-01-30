@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="app">Loading dashboard...</div>
@@ -20,7 +21,18 @@
       }
 
       const html = await res.text();
-      document.getElementById('app').innerHTML = html;
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      document.getElementById('app').innerHTML = doc.body.innerHTML;
+      doc.body.querySelectorAll('script').forEach((script) => {
+        const newScript = document.createElement('script');
+        if (script.src) {
+          newScript.src = script.src;
+        } else {
+          newScript.textContent = script.textContent;
+        }
+        document.getElementById('app').appendChild(newScript);
+      });
     }
 
     loadDashboard();
