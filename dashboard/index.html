@@ -22,21 +22,32 @@
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
-
+      // Inject <head> CSS (style and link)
       doc.head.querySelectorAll('style, link[rel="stylesheet"]').forEach(el => {
-        document.head.appendChild(el.cloneNode(true));
+        if (![...document.head.children].some(h => h.outerHTML === el.outerHTML)) {
+          document.head.appendChild(el.cloneNode(true));
+        }
       });
 
-      document.getElementById('app').innerHTML = doc.body.innerHTML;
+      const app = document.getElementById('app');
 
+      // Wrap body content in a div with same layout as original body
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'grid';
+      wrapper.style.gridTemplateColumns = '240px 1fr'; // matches adminHtml body
+      wrapper.style.minHeight = '100vh';
+      wrapper.innerHTML = doc.body.innerHTML;
+
+      // Clear app and append wrapper
+      app.innerHTML = '';
+      app.appendChild(wrapper);
+
+      // Re-run scripts inside the injected HTML
       doc.body.querySelectorAll('script').forEach(script => {
         const newScript = document.createElement('script');
-        if (script.src) {
-          newScript.src = script.src;
-        } else {
-          newScript.textContent = script.textContent;
-        }
-        document.getElementById('app').appendChild(newScript);
+        if (script.src) newScript.src = script.src;
+        else newScript.textContent = script.textContent;
+        app.appendChild(newScript);
       });
     }
 
