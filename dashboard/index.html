@@ -31,10 +31,12 @@
         }
       });
 
-      // Wrap body content in a div
+      // Wrapper mimicking body grid
       const wrapper = document.createElement('div');
-      wrapper.style.width = '100%';
+      wrapper.style.display = 'grid';
+      wrapper.style.gridTemplateColumns = '240px 1fr'; // same as original adminHtml body
       wrapper.style.minHeight = '100vh';
+      wrapper.style.width = '100%';
       wrapper.innerHTML = doc.body.innerHTML;
 
       // Clear app and append wrapper
