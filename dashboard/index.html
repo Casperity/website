@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard</title>
+  <style>
+    /* Optional: fallback loader style */
+    #app {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #888;
+      font-family: sans-serif;
+    }
+  </style>
 </head>
 <body>
   <div id="app">Loading dashboard...</div>
@@ -22,21 +33,34 @@
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
+      const app = document.getElementById('app');
 
+      // Inject <head> CSS (style and link)
       doc.head.querySelectorAll('style, link[rel="stylesheet"]').forEach(el => {
-        document.head.appendChild(el.cloneNode(true));
+        // Avoid duplicates
+        if (![...document.head.children].some(h => h.outerHTML === el.outerHTML)) {
+          document.head.appendChild(el.cloneNode(true));
+        }
       });
 
-      document.getElementById('app').innerHTML = doc.body.innerHTML;
+      // Wrap body content in a div to preserve layout and prevent collapsing
+      const wrapper = document.createElement('div');
+      wrapper.style.width = '100%';
+      wrapper.style.height = '100%';
+      wrapper.style.minHeight = '100vh';
+      wrapper.style.display = 'contents'; // preserves original body layout
+      wrapper.innerHTML = doc.body.innerHTML;
 
+      // Clear app and append wrapper
+      app.innerHTML = '';
+      app.appendChild(wrapper);
+
+      // Re-run scripts inside the injected HTML
       doc.body.querySelectorAll('script').forEach(script => {
         const newScript = document.createElement('script');
-        if (script.src) {
-          newScript.src = script.src;
-        } else {
-          newScript.textContent = script.textContent;
-        }
-        document.getElementById('app').appendChild(newScript);
+        if (script.src) newScript.src = script.src;
+        else newScript.textContent = script.textContent;
+        app.appendChild(newScript);
       });
     }
 
