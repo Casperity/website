@@ -22,6 +22,8 @@
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
+      const app = document.getElementById('app');
+
       // Inject <head> CSS (style and link)
       doc.head.querySelectorAll('style, link[rel="stylesheet"]').forEach(el => {
         if (![...document.head.children].some(h => h.outerHTML === el.outerHTML)) {
@@ -29,14 +31,19 @@
         }
       });
 
-      const app = document.getElementById('app');
-
-      // Wrap body content in a div with same layout as original body
+      // Create wrapper for body content
       const wrapper = document.createElement('div');
-      wrapper.style.display = 'grid';
-      wrapper.style.gridTemplateColumns = '240px 1fr'; // matches adminHtml body
-      wrapper.style.minHeight = '100vh';
       wrapper.innerHTML = doc.body.innerHTML;
+
+      // Apply all computed styles from the Worker <body> to the wrapper
+      const bodyStyles = getComputedStyle(doc.body);
+      for (let i = 0; i < bodyStyles.length; i++) {
+        const prop = bodyStyles[i];
+        wrapper.style.setProperty(prop, bodyStyles.getPropertyValue(prop));
+      }
+
+      // Ensure min height to avoid collapse
+      wrapper.style.minHeight = '100vh';
 
       // Clear app and append wrapper
       app.innerHTML = '';
