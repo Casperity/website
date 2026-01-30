@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+  <div id="app">Loading dashboard...</div>
+
+  <script>
+    async function loadDashboard() {
+      const res = await fetch(
+        'https://api.honhonstinks.lol/requestdashboard',
+        { credentials: 'include' }
+      );
+
+      if (!res.ok) {
+        document.getElementById('app').innerHTML =
+          '<h2>Not authorized</h2>';
+        return;
+      }
+
+      const html = await res.text();
+      document.getElementById('app').innerHTML = html;
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>
