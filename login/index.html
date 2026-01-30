@@ -76,7 +76,7 @@
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ email, password }),
-          credentials: 'same-origin',
+          credentials: 'include',
         });
 
         if (!response.ok) {
@@ -84,20 +84,7 @@
           throw new Error(text || 'Login failed');
         }
 
-        const meRes = await fetch('https://api.honhonstinks.lol/me', {
-          credentials: 'same-origin',
-        });
-
-        if (!meRes.ok) {
-          throw new Error('Session verification failed');
-        }
-
-        const data = await meRes.json();
-        showMessage(`Logged in successfully as ${data.email}!`, 'success');
-
-        setTimeout(() => {
-          window.location.href = '/dashboard';
-        }, 1500);
+        window.location.href = '/dashboard';
 
       } catch (err) {
         showMessage(err.message || 'Something went wrong. Please try again.', 'error');
