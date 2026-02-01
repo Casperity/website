@@ -20,13 +20,28 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <video id="bg-video" loop playsinline>
-        <source src="human2.mp4" type="video/mp4">
-    </video>
+    <video id="bg-video" loop playsinline></video>
 	  
     <div class="overlay" id="overlay">
         <div class="click-text">click</div>
     </div>
+
+	<script>
+		async function loadBackgroundVideo() {
+		  try {
+ 		   const res = await fetch('https://api.honhonstinks.lol/bgvideo');
+ 		   const data = await res.json();
+
+ 		   const video = document.getElementById('bg-video');
+ 		   video.src = data.video; // e.g. "human2.mp4"
+ 		   video.load();
+ 	 	} catch (e) {
+ 		   console.error('Failed to load video from API', e);
+ 		 }
+		}
+
+		loadBackgroundVideo();
+	</script>
 
     <script>
         const overlay = document.getElementById('overlay');
